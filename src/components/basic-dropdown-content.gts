@@ -137,8 +137,9 @@ export default class BasicDropdownContent<
     return style;
   }
 
-  get tag(): keyof HTMLElementTagNameMap {
-    return this.args.htmlTag || 'div';
+  get tag(): T {
+    // `T` defaults to `'div'` in the signature, so the fallback matches `ElementFromTagName<T>`
+    return this.args.htmlTag || ('div' as T);
   }
 
   /**
