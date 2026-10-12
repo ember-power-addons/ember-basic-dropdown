@@ -17,7 +17,9 @@ import BasicDropdown from '#src/components/basic-dropdown.gts';
 import { on } from '@ember/modifier';
 import Shadow from '../../../demo-app/components/shadow';
 import type { Dropdown, HorizontalPosition } from '#src/types.ts';
-import type { CalculatePosition } from '#src/utils/calculate-position.ts';
+import calculatePosition, {
+  type CalculatePosition,
+} from '#src/utils/calculate-position.ts';
 import type { ComponentLike } from '@glint/template';
 import type { BasicDropdownTriggerSignature } from '#src/components/basic-dropdown-trigger.gts';
 import type { BasicDropdownContentSignature } from '#src/components/basic-dropdown-content.gts';
@@ -1021,6 +1023,224 @@ module('Integration | Component | basic-dropdown', function (hooks) {
         'id-of-elmnt',
         'The content has been rendered in an alternative destination',
       );
+  });
+
+  test<ExtendedTestContext>('[BUGFIX] It repositions when a scrollbar caused by the unpositioned content disappears after the first reposition', async function (assert) {
+    assert.expect(3);
+
+    // The unpositioned content overflows the container (showing a scrollbar and shifting the
+    // centered trigger), but once placed below the trigger it fits and the scrollbar disappears.
+    await render(
+      <template>
+        {{! template-lint-disable no-inline-styles no-forbidden-elements }}
+        {{! #ember-testing is by default 200% width/height & has a scale. For this test we need to reset it }}
+        <style>
+          #ember-testing {
+            width: 100%;
+            height: 100%;
+            transform: none;
+            overflow: hidden;
+          }
+        </style>
+        <HostWrapper>
+          <style>
+            #scroll-shift-container::-webkit-scrollbar {
+              width: 20px;
+            }
+          </style>
+          <div
+            id="scroll-shift-container"
+            style="position: relative; width: 300px; height: 200px; overflow: auto; text-align: center;"
+          >
+            <BasicDropdown @destination="scroll-shift-destination" as |dd|>
+              <dd.Trigger style="display: inline-block; width: 100px;">Click me</dd.Trigger>
+              <dd.Content
+                style="position: absolute; width: 100px; height: 100px;"
+              >Hello</dd.Content>
+            </BasicDropdown>
+            <div style="height: 150px;"></div>
+            <div id="scroll-shift-destination"></div>
+          </div>
+        </HostWrapper>
+      </template>,
+    );
+
+    const container = getRootNode(this.element).querySelector(
+      '#scroll-shift-container',
+    ) as HTMLElement;
+    const trigger = getRootNode(this.element).querySelector(
+      '.ember-basic-dropdown-trigger',
+    ) as HTMLElement;
+    await click(trigger);
+
+    const content = getRootNode(this.element).querySelector(
+      '.ember-basic-dropdown-content',
+    ) as HTMLElement;
+    assert.strictEqual(
+      container.offsetWidth - container.clientWidth,
+      0,
+      'The container has no scrollbar once the content is positioned',
+    );
+    assert.strictEqual(
+      content.getBoundingClientRect().left,
+      trigger.getBoundingClientRect().left,
+      'The content is horizontally aligned with the trigger',
+    );
+    assert.strictEqual(
+      content.getBoundingClientRect().top,
+      trigger.getBoundingClientRect().bottom,
+      'The content is placed right below the trigger',
+    );
+  });
+
+  test<ExtendedTestContext>('[BUGFIX] It repositions when a scrollbar of a `position: fixed` container disappears after the first reposition', async function (assert) {
+    assert.expect(3);
+
+    // Same as above, but the trigger lives in a modal-like fixed overlay whose scrollbar
+    // appears for the unpositioned content and disappears once it is positioned.
+    await render(
+      <template>
+        {{! template-lint-disable no-inline-styles no-forbidden-elements }}
+        {{! #ember-testing is by default 200% width/height & has a scale. For this test we need to reset it }}
+        <style>
+          #ember-testing {
+            width: 100%;
+            height: 100%;
+            transform: none;
+            overflow: hidden;
+          }
+        </style>
+        <HostWrapper>
+          <style>
+            #fixed-overlay::-webkit-scrollbar {
+              width: 20px;
+            }
+          </style>
+          <div
+            id="fixed-overlay"
+            style="position: fixed; top: 0; left: 0; width: 300px; height: 200px; overflow: auto; z-index: 10000;"
+          >
+            <div style="position: relative; text-align: center;">
+              <BasicDropdown @destination="fixed-overlay-destination" as |dd|>
+                <dd.Trigger style="display: inline-block; width: 100px;">Click
+                  me</dd.Trigger>
+                <dd.Content
+                  style="position: absolute; width: 100px; height: 100px;"
+                >Hello</dd.Content>
+              </BasicDropdown>
+              <div style="height: 150px;"></div>
+              <div id="fixed-overlay-destination"></div>
+            </div>
+          </div>
+        </HostWrapper>
+      </template>,
+    );
+
+    const overlay = getRootNode(this.element).querySelector(
+      '#fixed-overlay',
+    ) as HTMLElement;
+    const trigger = getRootNode(this.element).querySelector(
+      '.ember-basic-dropdown-trigger',
+    ) as HTMLElement;
+    await click(trigger);
+
+    const content = getRootNode(this.element).querySelector(
+      '.ember-basic-dropdown-content',
+    ) as HTMLElement;
+    assert.strictEqual(
+      overlay.offsetWidth - overlay.clientWidth,
+      0,
+      'The fixed overlay has no scrollbar once the content is positioned',
+    );
+    assert.strictEqual(
+      content.getBoundingClientRect().left,
+      trigger.getBoundingClientRect().left,
+      'The content is horizontally aligned with the trigger',
+    );
+    assert.strictEqual(
+      content.getBoundingClientRect().top,
+      trigger.getBoundingClientRect().bottom,
+      'The content is placed right below the trigger',
+    );
+  });
+
+  test<ExtendedTestContext>('When rendered in-place, it stays aligned and calculates the position only once when the content adds a scrollbar', async function (assert) {
+    const self = this;
+    let calls = 0;
+
+    assert.expect(4);
+    this.calculatePosition = function (...args) {
+      calls++;
+      return calculatePosition(...args);
+    };
+
+    // The in-place content overflows the container, so the scrollbar appears before the first
+    // reposition and stays. The centered trigger shifts, but the content moves with it.
+    await render<ExtendedTestContext>(
+      <template>
+        {{! template-lint-disable no-inline-styles no-forbidden-elements }}
+        {{! #ember-testing is by default 200% width/height & has a scale. For this test we need to reset it }}
+        <style>
+          #ember-testing {
+            width: 100%;
+            height: 100%;
+            transform: none;
+            overflow: hidden;
+          }
+        </style>
+        <HostWrapper>
+          <style>
+            #in-place-scroll-container::-webkit-scrollbar {
+              width: 20px;
+            }
+          </style>
+          <div
+            id="in-place-scroll-container"
+            style="position: relative; width: 300px; height: 200px; overflow: auto; text-align: center;"
+          >
+            <BasicDropdown
+              @renderInPlace={{true}}
+              @calculatePosition={{self.calculatePosition}}
+              style="position: relative; display: inline-block; width: 100px;"
+              as |dd|
+            >
+              <dd.Trigger>Click me</dd.Trigger>
+              <dd.Content
+                style="position: absolute; top: 100%; left: 0; width: 100px; height: 300px;"
+              >Hello</dd.Content>
+            </BasicDropdown>
+          </div>
+        </HostWrapper>
+      </template>,
+    );
+
+    const container = getRootNode(this.element).querySelector(
+      '#in-place-scroll-container',
+    ) as HTMLElement;
+    const trigger = getRootNode(this.element).querySelector(
+      '.ember-basic-dropdown-trigger',
+    ) as HTMLElement;
+    await click(trigger);
+
+    const content = getRootNode(this.element).querySelector(
+      '.ember-basic-dropdown-content',
+    ) as HTMLElement;
+    assert.strictEqual(
+      container.offsetWidth - container.clientWidth,
+      20,
+      'The container shows a scrollbar caused by the content',
+    );
+    assert.strictEqual(
+      content.getBoundingClientRect().left,
+      trigger.getBoundingClientRect().left,
+      'The content is horizontally aligned with the trigger',
+    );
+    assert.strictEqual(
+      content.getBoundingClientRect().top,
+      trigger.getBoundingClientRect().bottom,
+      'The content is placed right below the trigger',
+    );
+    assert.strictEqual(calls, 1, 'The position is calculated only once');
   });
 
   // A11y
