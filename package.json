@@ -124,9 +124,9 @@
     "vite": "^8.3.4"
   },
   "peerDependencies": {
-    "@ember/test-helpers": "^5.0.0",
-    "@embroider/macros": "^1.19.5",
-    "@glimmer/component": "^2.0.0"
+    "@ember/test-helpers": "^5.7.0",
+    "@embroider/macros": "^1.21.3",
+    "@glimmer/component": "^2.1.1"
   },
   "packageManager": "pnpm@12.11.2",
   "publishConfig": {
