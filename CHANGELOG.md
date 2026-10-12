@@ -1,5 +1,24 @@
 # Changelog
 
+## Release (2026-10-12)
+
+* ember-basic-dropdown 9.0.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-basic-dropdown`
+  * [#1157](https://github.com/ember-power-addons/ember-basic-dropdown/pull/1157) Fix dropdown offset on first open when a scrollbar appears and disappears ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* `ember-basic-dropdown`
+  * [#1129](https://github.com/ember-power-addons/ember-basic-dropdown/pull/1129) Remove v8.x examples in docs ([@mkszepp](https://github.com/mkszepp))
+
+#### :house: Internal
+* `ember-basic-dropdown`
+  * [#1158](https://github.com/ember-power-addons/ember-basic-dropdown/pull/1158) Update packages ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## Release (2026-05-14)
 
 * ember-basic-dropdown 9.0.0 (major)
