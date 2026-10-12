@@ -1355,9 +1355,12 @@ module('Integration | Component | basic-dropdown', function (hooks) {
   test<ExtendedTestContext>('The user can pass a custom `calculatePosition` function to customize how the component is placed on the screen', async function (assert) {
     const self = this;
 
+    let calculatePositionCalled = false;
+
     assert.expect(4);
+    // It may be called more than once if the trigger moves during the first reposition
     this.calculatePosition = function () {
-      assert.ok('custom calculatePosition was passed to the component');
+      calculatePositionCalled = true;
       return {
         horizontalPosition: 'right',
         verticalPosition: 'above',
@@ -1387,6 +1390,10 @@ module('Integration | Component | basic-dropdown', function (hooks) {
       getRootNode(this.element).querySelector(
         '.ember-basic-dropdown-trigger',
       ) as HTMLElement,
+    );
+    assert.true(
+      calculatePositionCalled,
+      'custom calculatePosition was passed to the component',
     );
     assert
       .dom('.ember-basic-dropdown-content', getRootNode(this.element))
