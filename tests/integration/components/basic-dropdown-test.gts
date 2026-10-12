@@ -39,6 +39,22 @@ interface ExtendedTestContext extends TestContext {
   calculatePosition?: CalculatePosition;
 }
 
+// With a fractional `devicePixelRatio` (e.g. 125% display scaling) rects of aligned elements
+// can differ by a tiny floating point error, so compare them with a tolerance.
+function assertPositionEqual(
+  assert: Assert,
+  actual: number,
+  expected: number,
+  message: string,
+) {
+  assert.pushResult({
+    result: Math.abs(actual - expected) < 0.1,
+    actual,
+    expected,
+    message,
+  });
+}
+
 function getRootNode(element: Element): HTMLElement {
   const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
   if (shadowRoot) {
@@ -1081,12 +1097,14 @@ module('Integration | Component | basic-dropdown', function (hooks) {
       0,
       'The container has no scrollbar once the content is positioned',
     );
-    assert.strictEqual(
+    assertPositionEqual(
+      assert,
       content.getBoundingClientRect().left,
       trigger.getBoundingClientRect().left,
       'The content is horizontally aligned with the trigger',
     );
-    assert.strictEqual(
+    assertPositionEqual(
+      assert,
       content.getBoundingClientRect().top,
       trigger.getBoundingClientRect().bottom,
       'The content is placed right below the trigger',
@@ -1152,12 +1170,14 @@ module('Integration | Component | basic-dropdown', function (hooks) {
       0,
       'The fixed overlay has no scrollbar once the content is positioned',
     );
-    assert.strictEqual(
+    assertPositionEqual(
+      assert,
       content.getBoundingClientRect().left,
       trigger.getBoundingClientRect().left,
       'The content is horizontally aligned with the trigger',
     );
-    assert.strictEqual(
+    assertPositionEqual(
+      assert,
       content.getBoundingClientRect().top,
       trigger.getBoundingClientRect().bottom,
       'The content is placed right below the trigger',
@@ -1225,17 +1245,20 @@ module('Integration | Component | basic-dropdown', function (hooks) {
     const content = getRootNode(this.element).querySelector(
       '.ember-basic-dropdown-content',
     ) as HTMLElement;
-    assert.strictEqual(
-      container.offsetWidth - container.clientWidth,
-      20,
-      'The container shows a scrollbar caused by the content',
+    // Don't assert the scrollbar width, browsers with overlay scrollbars (e.g. Firefox, which
+    // ignores `::-webkit-scrollbar`, or Chrome on some platforms) don't reserve any space for it.
+    assert.true(
+      container.scrollHeight > container.clientHeight,
+      'The content overflows the container',
     );
-    assert.strictEqual(
+    assertPositionEqual(
+      assert,
       content.getBoundingClientRect().left,
       trigger.getBoundingClientRect().left,
       'The content is horizontally aligned with the trigger',
     );
-    assert.strictEqual(
+    assertPositionEqual(
+      assert,
       content.getBoundingClientRect().top,
       trigger.getBoundingClientRect().bottom,
       'The content is placed right below the trigger',
