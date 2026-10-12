@@ -144,7 +144,7 @@ export default class extends Component {
       <input
         type="checkbox"
         id="config-render-in-lace"
-        checked={{eq this.renderInPlace "left"}}
+        checked={{this.renderInPlace}}
         {{on "change" (fn (mut this.renderInPlace) (not this.renderInPlace))}}
       />
       <label for="config-render-in-lace">Render in-place</label>
