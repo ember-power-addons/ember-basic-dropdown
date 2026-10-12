@@ -100,11 +100,9 @@ export interface BasicDropdownArgs<
   onOpen?: (dropdown: Dropdown, e?: Event) => boolean | void;
   onClose?: (dropdown: Dropdown, e?: Event) => boolean | void;
   triggerComponent?:
-    | ComponentLike<BasicDropdownTriggerSignature<TriggerHtmlTag>>
-    | undefined;
+    ComponentLike<BasicDropdownTriggerSignature<TriggerHtmlTag>> | undefined;
   contentComponent?:
-    | ComponentLike<BasicDropdownContentSignature<ContentHtmlTag>>
-    | undefined;
+    ComponentLike<BasicDropdownContentSignature<ContentHtmlTag>> | undefined;
   calculatePosition?: CalculatePosition;
 }
 

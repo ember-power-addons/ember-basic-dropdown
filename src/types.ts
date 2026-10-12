@@ -31,9 +31,4 @@ export type RepositionChanges = {
 
 export type VerticalPosition = 'auto' | 'above' | 'below';
 export type HorizontalPosition =
-  | 'auto'
-  | 'auto-right'
-  | 'auto-left'
-  | 'left'
-  | 'right'
-  | 'center';
+  'auto' | 'auto-right' | 'auto-left' | 'left' | 'right' | 'center';
