@@ -301,6 +301,44 @@ export default class BasicDropdown<
       return;
     }
 
+    const triggerRectBefore =
+      this.top === undefined
+        ? triggerElement.getBoundingClientRect()
+        : undefined;
+
+    const changes = this._calculateAndApplyPosition(
+      triggerElement,
+      dropdownElement,
+      this.destinationElement,
+    );
+
+    if (triggerRectBefore) {
+      // Before the first reposition the content is rendered unpositioned at the end of
+      // its destination, which can make the page (or a scrollable ancestor) temporarily
+      // overflow and show a scrollbar. Once positioned the scrollbar may disappear again,
+      // shifting the trigger, so the calculated position would be stale (see ember-power-select#2081).
+      const triggerRectAfter = triggerElement.getBoundingClientRect();
+      if (
+        triggerRectAfter.left !== triggerRectBefore.left ||
+        triggerRectAfter.top !== triggerRectBefore.top ||
+        triggerRectAfter.width !== triggerRectBefore.width
+      ) {
+        return this._calculateAndApplyPosition(
+          triggerElement,
+          dropdownElement,
+          this.destinationElement,
+        );
+      }
+    }
+
+    return changes;
+  }
+
+  _calculateAndApplyPosition(
+    triggerElement: HTMLElement,
+    dropdownElement: HTMLElement,
+    destinationElement: HTMLElement,
+  ): RepositionChanges {
     const {
       horizontalPosition,
       verticalPosition,
@@ -313,7 +351,7 @@ export default class BasicDropdown<
     const positionData = calculatePositionFn(
       triggerElement,
       dropdownElement,
-      this.destinationElement,
+      destinationElement,
       {
         horizontalPosition,
         verticalPosition,
