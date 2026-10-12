@@ -44,8 +44,9 @@ export interface BasicDropdownTriggerSignature<
 export default class BasicDropdownTrigger<
   T extends keyof HTMLElementTagNameMap,
 > extends Component<BasicDropdownTriggerSignature<T>> {
-  get tag(): keyof HTMLElementTagNameMap {
-    return this.args.htmlTag || 'div';
+  get tag(): T {
+    // `T` defaults to `'div'` in the signature, so the fallback matches `ElementFromTagName<T>`
+    return this.args.htmlTag || ('div' as T);
   }
 
   // Actions

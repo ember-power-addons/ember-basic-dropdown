@@ -29,8 +29,8 @@ interface ExtendedTestContext extends TestContext {
   disabled?: boolean;
   isOpen?: boolean;
   remoteController?: Dropdown | null;
-  triggerComponent?: ComponentLike<BasicDropdownTriggerSignature>;
-  contentComponent?: ComponentLike<BasicDropdownContentSignature>;
+  triggerComponent?: ComponentLike<BasicDropdownTriggerSignature<'span'>>;
+  contentComponent?: ComponentLike<BasicDropdownContentSignature<'span'>>;
   toggleDisabled: () => void;
   onFocusOut: () => void;
   registerAPI?: (dropdown: Dropdown | null) => void;

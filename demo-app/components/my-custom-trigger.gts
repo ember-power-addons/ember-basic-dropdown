@@ -3,4 +3,6 @@ import type { TemplateOnlyComponent } from '@ember/component/template-only';
 
 export default <template>
   <span id="my-custom-trigger" ...attributes>My custom trigger</span>
-</template> satisfies TemplateOnlyComponent<BasicDropdownTriggerSignature>;
+</template> satisfies TemplateOnlyComponent<
+  BasicDropdownTriggerSignature<'span'>
+>;
