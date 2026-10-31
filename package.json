@@ -1,0 +1,149 @@
+{
+  "name": "ember-basic-dropdown",
+  "version": "9.0.1",
+  "description": "The basic dropdown that your ember app needs",
+  "keywords": [
+    "ember",
+    "ember-addon",
+    "dropdown",
+    "ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ember-power-addons/ember-basic-dropdown.git"
+  },
+  "license": "MIT",
+  "author": "Miguel Camba",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "sass": "./ember-basic-dropdown.scss",
+  "style": "./dist/vendor/ember-basic-dropdown.css",
+  "exports": {
+    ".": {
+      "types": "./declarations/index.d.ts",
+      "sass": "./ember-basic-dropdown.scss",
+      "default": "./dist/index.js"
+    },
+    "./addon-main.js": "./addon-main.cjs",
+    "./*": {
+      "types": "./declarations/*.d.ts",
+      "default": "./dist/*.js"
+    },
+    "./ember-basic-dropdown.less": "./ember-basic-dropdown.less",
+    "./ember-basic-dropdown.scss": "./ember-basic-dropdown.scss",
+    "./_index.scss": "./_index.scss",
+    "./less/base.less": "./less/base.less",
+    "./scss/base.scss": "./scss/base.scss",
+    "./less/variables.less": "./less/variables.less",
+    "./scss/variables.scss": "./scss/variables.scss",
+    "./vendor/*": "./dist/vendor/*"
+  },
+  "files": [
+    "_index.scss",
+    "addon-main.cjs",
+    "declarations",
+    "dist",
+    "ember-basic-dropdown.less",
+    "ember-basic-dropdown.scss",
+    "less",
+    "scss"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
+    "lint:format": "prettier . --cache --check",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:publish": "pnpm build && publint run --level error",
+    "lint:types": "ember-tsc --noEmit",
+    "start": "vite dev",
+    "test": "vite build --mode=development --out-dir dist-tests && testem --file testem.cjs ci --port 0"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.10.3",
+    "decorator-transforms": "^2.4.0",
+    "ember-element-helper": "^0.8.8",
+    "ember-modifier": "^4.3.0",
+    "ember-style-modifier": "^4.6.0",
+    "ember-truth-helpers": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/eslint-parser": "^7.28.6",
+    "@babel/plugin-transform-typescript": "^7.28.6",
+    "@babel/runtime": "^8.0.7",
+    "@ember/app-tsconfig": "^2.1.0",
+    "@ember/library-tsconfig": "^3.0.0",
+    "@ember/test-helpers": "^5.7.0",
+    "@ember/test-waiters": "^4.1.2",
+    "@embroider/addon-dev": "^8.4.2",
+    "@embroider/compat": "^4.1.27",
+    "@embroider/core": "^4.6.9",
+    "@embroider/macros": "^1.21.3",
+    "@embroider/vite": "^1.7.15",
+    "@eslint/js": "^9.39.4",
+    "@glimmer/component": "^2.1.1",
+    "@glint/ember-tsc": "^1.11.6",
+    "@glint/template": "^1.9.0",
+    "@glint/tsserver-plugin": "^2.7.9",
+    "@rollup/plugin-babel": "^7.1.0",
+    "@types/qunit": "^2.19.14",
+    "babel-plugin-ember-template-compilation": "^4.0.1",
+    "concurrently": "^10.0.6",
+    "ember-page-title": "^9.0.3",
+    "ember-qunit": "^9.2.0",
+    "ember-route-template": "^1.0.3",
+    "ember-source": "^7.3.0",
+    "ember-strict-application-resolver": "^0.1.1",
+    "ember-template-lint": "^7.9.4",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ember": "^13.6.1",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-n": "^18.4.1",
+    "globals": "^17.13.0",
+    "postcss": "^8.5.29",
+    "prettier": "^3.9.10",
+    "prettier-plugin-ember-template-tag": "^2.1.8",
+    "publint": "^0.3.25",
+    "qunit": "^3.0.0",
+    "qunit-dom": "^3.6.0",
+    "release-plan": "^0.20.1",
+    "rollup": "^4.64.5",
+    "rollup-plugin-sass": "^1.15.3",
+    "sass-embedded": "^1.105.1",
+    "testem": "^3.21.3",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.1",
+    "vite": "^8.3.4"
+  },
+  "peerDependencies": {
+    "@ember/test-helpers": "^5.7.0",
+    "@embroider/macros": "^1.21.3",
+    "@glimmer/component": "^2.1.1"
+  },
+  "packageManager": "pnpm@12.11.2",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/basic-dropdown-content.js": "./dist/_app_/components/basic-dropdown-content.js",
+      "./components/basic-dropdown-trigger.js": "./dist/_app_/components/basic-dropdown-trigger.js",
+      "./components/basic-dropdown-wormhole.js": "./dist/_app_/components/basic-dropdown-wormhole.js",
+      "./components/basic-dropdown.js": "./dist/_app_/components/basic-dropdown.js",
+      "./modifiers/basic-dropdown-trigger.js": "./dist/_app_/modifiers/basic-dropdown-trigger.js"
+    }
+  }
+}
