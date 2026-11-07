@@ -5074,8 +5074,8 @@ packages:
     peerDependencies:
       markdown-it: '>= 13.0.0'
 
-  markdown-it@14.3.2:
-    resolution: {integrity: sha512-sHHjZ5fJKlgrG4qns2YwVcdNep35h5fERrfkD2YNsb9UFk0UIHarbiTaHKVMlPuWAoiilyK8Fv/jAm11slsY7Q==}
+  markdown-it@14.3.3:
+    resolution: {integrity: sha512-L//tDAkjTjJCU6pBUSBTgs3Kg4InVaZuUZog/b6V12UKhcDQ7S78877ibbCanRExwPuYP1CZD7Gd2dxSy1GXRg==}
     hasBin: true
 
   matcher-collection@1.1.2:
@@ -8016,8 +8016,8 @@ snapshots:
       inflection: 3.0.2
       isbinaryfile: 5.0.7
       lodash: 4.18.1
-      markdown-it: 14.3.2
-      markdown-it-terminal: 0.4.0(markdown-it@14.3.2)
+      markdown-it: 14.3.3
+      markdown-it-terminal: 0.4.0(markdown-it@14.3.3)
       minimatch: 10.2.6
       promise.hash.helper: 1.0.8
       quick-temp: 0.1.9
@@ -10650,8 +10650,8 @@ snapshots:
       is-git-url: 1.0.0
       is-language-code: 5.2.2
       lodash: 4.18.1
-      markdown-it: 14.3.2
-      markdown-it-terminal: 0.4.0(markdown-it@14.3.2)
+      markdown-it: 14.3.3
+      markdown-it-terminal: 0.4.0(markdown-it@14.3.3)
       minimatch: 10.2.6
       morgan: 1.12.1(supports-color@10.2.2)
       nopt: 3.0.6
@@ -12512,15 +12512,15 @@ snapshots:
     dependencies:
       p-defer: 1.0.0
 
-  markdown-it-terminal@0.4.0(markdown-it@14.3.2):
+  markdown-it-terminal@0.4.0(markdown-it@14.3.3):
     dependencies:
       ansi-styles: 3.2.1
       cardinal: 1.0.0
       cli-table: 0.3.11
       lodash.merge: 4.6.2
-      markdown-it: 14.3.2
+      markdown-it: 14.3.3
 
-  markdown-it@14.3.2:
+  markdown-it@14.3.3:
     dependencies:
       argparse: 2.0.1
       entities: 4.5.0
