@@ -1,5 +1,10 @@
 # Changelog
 
+
+
+
+
+
 ## Release (2026-10-12)
 
 * ember-basic-dropdown 9.0.1 (patch)
