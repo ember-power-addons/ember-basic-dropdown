@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2026-11-17)
+
+* ember-basic-dropdown 9.1.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-basic-dropdown`
+  * [#1216](https://github.com/ember-power-addons/ember-basic-dropdown/pull/1216) Update ember-element-helper to v1 ([@johanrd](https://github.com/johanrd))
+
+#### Committers: 1
+- Johan Røed ([@johanrd](https://github.com/johanrd))
+
 ## Release (2026-10-12)
 
 * ember-basic-dropdown 9.0.1 (patch)
