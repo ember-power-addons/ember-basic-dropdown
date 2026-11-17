@@ -16,3 +16,6 @@ resolvePeersFromWorkspaceRoot: false
 packages:
   - .
   - docs
+
+minimumReleaseAgeExclude:
+  - ember-element-helper@1.0.0
