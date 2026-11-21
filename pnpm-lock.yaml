@@ -232,7 +232,7 @@ importers:
         version: 2.2.1
       '@glint/ember-tsc':
         specifier: ^1.11.6
-        version: 1.14.3(ember-source@7.3.1(@glimmer/component@2.2.1)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
+        version: 1.14.4(ember-source@7.3.1(@glimmer/component@2.2.1)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
       '@glint/template':
         specifier: ^1.9.0
         version: 1.11.1
@@ -392,7 +392,7 @@ importers:
         version: 2.2.1
       '@glint/ember-tsc':
         specifier: ^1.11.6
-        version: 1.14.3(ember-source@7.3.1(@glimmer/component@2.2.1)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
+        version: 1.14.4(ember-source@7.3.1(@glimmer/component@2.2.1)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
       '@glint/template':
         specifier: ^1.9.0
         version: 1.11.1
@@ -1370,6 +1370,16 @@ packages:
 
   '@glint/ember-tsc@1.14.3':
     resolution: {integrity: sha512-/NHLni6c5o1KsV6l+P6k0qzmijJmVCs3qZ+4Slrxx2ps8/T7NWIB2PUNvCV27A3JcPcLd/Jr5x5LeysoW3YPTA==}
+    hasBin: true
+    peerDependencies:
+      ember-source: '>=3.28.0'
+      typescript: '>=5.6.0'
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
+
+  '@glint/ember-tsc@1.14.4':
+    resolution: {integrity: sha512-yWWMiu5aGcSrXodSjnrM38RY8Kph5gPSUb9oauczoE7VkcD4duVlamGU47xuKBIUUtNQjUVA9zRnSKF4CTMgbA==}
     hasBin: true
     peerDependencies:
       ember-source: '>=3.28.0'
@@ -8343,7 +8353,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@glint/ember-tsc@1.14.3(ember-source@7.3.1(@glimmer/component@2.2.1)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)':
+  '@glint/ember-tsc@1.14.4(ember-source@7.3.1(@glimmer/component@2.2.1)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)':
     dependencies:
       '@glimmer/syntax': 0.97.0
       '@glint/template': 1.11.1
